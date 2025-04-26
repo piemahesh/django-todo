@@ -1,9 +1,9 @@
 from .db import students
 
 
-def checkUser(email, password):
+def checkUser(email):
     try:
-        user = students.find_one({"email": email, "password": password})
+        user = students.find_one({"email": email})
         print(user)
         print("🎈🎈🎈🎈🎈🎈🎈")
         return True if user else False
