@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from .db import students
 from .services import checkUser
 from .validate import registerValidation
@@ -20,7 +20,8 @@ def getLoginPage(req):
                 hashed = user["password"]
                 if bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8")):
                     req.session['userId'] = str(user["_id"])
-                    return redirect('taskPage')
+                    
+                    return render(req,'task.html',{"data":"login successfully"})
                 else:
                     print("password is incorrect")
                     return render(req,"Login.html",{"data":"password is incorrect"})
@@ -66,9 +67,11 @@ def task(req):
     userId = req.session.get("userId")
     if not userId:
         return redirect('loginPage')
-
-    print("task page render",userId)
-    return render(req,"task.html")
+    studentCol = students.find()
+    studentsData = []
+    for student in studentCol:
+        studentsData.append(student)
+    return render(req,"task.html",{"data":studentsData})
 
 
 def logout(req):
@@ -78,3 +81,27 @@ def logout(req):
     except Exception as e:
         print(f"Error occurred while logging out: {e}")
         return redirect('loginPage')
+    
+    
+def viewSpeficTask(req):
+    userId = req.session.get("userId")
+    if not userId:
+        return redirect('loginPage')
+    mydata = [
+        {
+            "task": "Task 1",
+            "description": "Description for Task 1",
+            "status": "Completed"
+        },
+        {
+            "task": "Task 2",
+            "description": "Description for Task 2",
+            "status": "Pending"
+        },
+        {
+            "task": "Task 3",
+            "description": "Description for Task 3",
+            "status": "In Progress"
+        }
+    ]
+    return render(req,"viewTask.html",{"data":mydata})

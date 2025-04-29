@@ -6,4 +6,5 @@ urlpatterns = [
     path("register", views.registerPage,name="registerPage"),
     path("task", views.task,name="taskPage"),
     path("logout", views.logout,name="logout"),
+    path("view_task", views.viewSpeficTask,name="viewTask"),
 ]

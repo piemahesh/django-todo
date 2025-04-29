@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
-    <h1>Task page</h1>
+    <div class="navbar">navbar</div>
+    {% block content %}
+     <h1>Task page</h1>
+
     <a href="{%  url 'logout' %}">Logout</a>
+  
+    {% for student in data %}
+    <div class="card">
+      
+      <p>{{student.email}}</p>
+      <p>{{student.password}}</p>
+      
+     
+    {% endfor %}
+    <a href="{%  url 'viewTask' %}">view task</a>
+    {% endblock content %}
+      {% block message %}
+      <div> this is task page using block -page task.html</div>
+      {% endblock message %}
+    <div class="footer">FOOTER</div>
   </body>
 </html>

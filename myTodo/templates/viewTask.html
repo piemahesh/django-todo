@@ -1,0 +1,11 @@
+{% extends "task.html" %} {% block content %}
+<h1>View specific task</h1>
+{% now "Y-m-d" %}
+{% endblock content %} {% block message %} {%for task in data %}
+
+<div style='color:{% cycle 'red' 'blue' %}'>
+  <p>{{task.task}}</p>
+  <p>{{task.description}}</p>]
+  <p>{{task.status}}</p>
+</div>
+{% endfor %} {% endblock message %}
